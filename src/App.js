@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { ToDoBanner }from './ToDoBanner';
 import { ToDoRow}  from './ToDoRow';
 import { ToDoCreator } from './ToDoCreator';
+import { VisibilityControl } from './VisibilityControl';
 
 
 // function App() {
@@ -91,7 +92,8 @@ export default class App extends Component {
           {action: "Go Fishing", done: false},
           {action: "Go Hunting", done: false},
           {action: "Go seomthing", done: false}
-        ]
+        ],
+        showCompleted: true
       }
     )
   };
@@ -124,12 +126,8 @@ export default class App extends Component {
   <ToDoCreator
     callback = {this.createNewTodoCallback}
   />
-
-
-
-
     {/* Feature 3*/}
-    <table className="table talbe-striped table-bordered">
+    <table className="table table-striped table-bordered">
       <thead>
         <tr>
           <th>Description</th>
@@ -140,6 +138,31 @@ export default class App extends Component {
         {this.todoTableRows(false)}
       </tbody>
     </table>
+
+    <div className="bg-secondary text-white text-center p-2">
+      <VisibilityControl
+        description = "Completed Tasks"
+        isChecked = {this.state.showCompleted}
+        callback = {checked => this.setState({
+          showCompleted: checked
+        })}
+      />
+    </div>
+{ this.state.showCompleted &&
+    <table className="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>ReAdd Task</th>
+        </tr>
+      </thead>
+      <tbody>
+        {this.todoTableRows(true)}
+      </tbody>
+    </table>
+}
+
+
   </div>
 
 };
