@@ -1,9 +1,10 @@
-import {Component} from 'react';
+import { Component } from 'react';
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import {ToDoBanner}from './ToDoBanner';
-import {ToDoRow} from './ToDoRow';
+import { ToDoBanner }from './ToDoBanner';
+import { ToDoRow}  from './ToDoRow';
+import { ToDoCreator } from './ToDoCreator';
 
 
 // function App() {
@@ -78,6 +79,25 @@ export default class App extends Component {
     )}
   );
 
+  // Feature 5A
+  //  the method below is a built in react method to handle logic for when the app "mounts" or "loads"
+
+  componentDidMount = () => {
+    let data = localStorage.getItem("todos");
+    this.setState(
+      data != null ? JSON.parse(data) : {
+        userName: "Billy Bob",
+        todoItems: [
+          {action: "Go Fishing", done: false},
+          {action: "Go Hunting", done: false},
+          {action: "Go seomthing", done: false}
+        ]
+      }
+    )
+  };
+
+  
+  
   
   
   // When using the Lambda syntax the return keyword is not needed. 
@@ -88,6 +108,16 @@ export default class App extends Component {
       displayName = {this.state.userName}
       tasks = {this.state.todoItems}
     />
+
+
+  {/* Feature 5B */}
+  <ToDoCreator
+    //callback = {this.}
+    />
+
+
+
+
     {/* Feature 3*/}
     <table className="table talbe-striped table-bordered">
       <thead>
