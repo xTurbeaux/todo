@@ -96,7 +96,17 @@ export default class App extends Component {
     )
   };
 
-  
+  // Feature 5E, method below is the callback for the ToDoCreator component 
+  createNewTodoCallback = (newTask) => {
+    if (!this.state.todoItems.find(
+      x => x.action === this.state.newItemText
+    )){
+      this.setState({
+        todoItems: [...this.state.todoItems, {action: newTask, done: false}]
+      }, () => localStorage.setItem("todos", JSON.stringify(this.state)) //end of setItem
+      );
+    }
+  };
   
   
   
@@ -112,8 +122,8 @@ export default class App extends Component {
 
   {/* Feature 5B */}
   <ToDoCreator
-    //callback = {this.}
-    />
+    callback = {this.createNewTodoCallback}
+  />
 
 
 
