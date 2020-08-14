@@ -1,8 +1,10 @@
 import {Component} from 'react';
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.css';
+import {ToDoBanner}from './ToDoBanner';
+import {ToDoRow} from './ToDoRow';
+
 
 // function App() {
 //   return (
@@ -25,14 +27,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 //   );
 // }
 
-export class ToDoBanner extends Component {
-  render = () =>
-    <h4 className="bg-primary text-white text-center p-2">
-      {this.props.displayName}'s To Do List ({this.props.tasks.filter(
-        x => !x.done).length
-      } items still to do)
-    </h4>
-}
+
 export default class App extends Component {
   // Above we have created a class called App that extends the functionality of the component class
 
@@ -50,17 +45,26 @@ export default class App extends Component {
     this.state ={
       userName: "Aaron M..",
       todoItems: [
-        {action: "Move Burn Pile", done:false},
-        {action: "Mow", done:false},
-        {action: "Recon shoreline", done:false},
-        {action: "Collect the bit", done:true},
-        {action: "Detail clean inside of car", done:false}
+        {action: "Move Burn Pile", done: false},
+        {action: "Mow", done: false},
+        {action: "Recon shoreline", done: false},
+        {action: "Collect the bit", done: true},
+        {action: "Detail clean inside of car", done: false}
       ]
     }
 
   } 
 
-  
+  //Part of Feature 3
+  //  If the ToDoRow Component's "done" property experiences a change event (checking the Done box in the UI) then the ToDoRow component calls a Callback method called toggleTodo (below) and passes toggleTodo the checked todo item
+
+  todoTableRows = (isTaskDone) => this.state.todoItems.filter( x => x.done == isTaskDone).map( notCompleted => 
+    <ToDoRow
+      key = {notCompleted.action}
+      item = {notCompleted}
+    />
+    )
+
 
 
   // When using the Lambda syntax the return keyword is not needed. 
@@ -71,6 +75,18 @@ export default class App extends Component {
       displayName = {this.state.userName}
       tasks = {this.state.todoItems}
     />
+    {/* Feature 3*/}
+    <table className="table talbe-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Done</th>
+        </tr>
+      </thead>
+      <tbody>
+        {this.todoTableRows(false)}
+      </tbody>
+    </table>
   </div>
 
 };
