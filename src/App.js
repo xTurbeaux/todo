@@ -62,11 +62,24 @@ export default class App extends Component {
     <ToDoRow
       key = {notCompleted.action}
       item = {notCompleted}
+      callback = {this.toggleTodo} //teh callback will be invoked when everything in todorow is finished 
     />
-    )
+    );
 
+  // Feature 4
+  //  The toggleTodo method is invoked as a callback when the ToDoRow component has a change event to the "done" property
+  //  .setState allows the data to be updated
+  //  When setState is invoked, React will make a new object with the changes.  Under the hood, React will compare the new object with the DOM version of the object.  If there is a difference between the 2 objects then the DOM will get re-drawn and we see the changes 
+  // the toggleTodo function is invoked as a callback from the <ToDoRow> component
 
+  toggleTodo = (todo) => this.setState(
+    {todoItems: this.state.todoItems.map(
+      item => item.action === todo.action ? {...item, done: !item.done } : item
+    )}
+  );
 
+  
+  
   // When using the Lambda syntax the return keyword is not needed. 
 
   render = () => 
